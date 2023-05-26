@@ -1,57 +1,90 @@
 import turtle
-import random
+from random import randint
 import time
 
 
 screen = turtle.Screen()
-screen.bgcolor("light blue")
+screen.bgcolor("orange")
 screen.title("catch the jack")
+
 SCORE = 0
 
 
+
 jack = turtle.Turtle()
-t1 = turtle.Turtle()
-t2 = turtle.Turtle()
-
-jack.shape("turtle")
-jack.shapesize(3)
+score_turtle = turtle.Turtle()
+time_turtle = turtle.Turtle()
+hey_turtle = turtle.Turtle()
 
 
-def score():
-    t1.speed(0)
-    t1.hideturtle()
-    t1.penup()
-    t1.left(90)
-    t1.forward(280)
-    t1.write(f"SCORE: {SCORE} ",align="center", font=["Arial", 15])
+def hey_setup():
+    hey_turtle.hideturtle()
+    hey_turtle.color("white")
+    hey_turtle.penup()
+    hey_turtle.setposition(-370, 280)
+    hey_turtle.write("hey! try to catch the jack!!", font=["Arial", 12])
 
 
-# screen timer function
-def timer(start):
+def score_setup():
+    score_turtle.speed(0)
+    score_turtle.hideturtle()
+    score_turtle.color("yellow")
+    score_turtle.penup()
+    score_turtle.setposition(0, 280)
+    score_turtle.write(f"SCORE: {SCORE} ", align="center", font=["Arial", 15])
 
-    t2.speed(0)
-    t2.hideturtle()
-    t2.penup()
-    t2.left(90)
-    t2.forward(260)
-    x = start
-    for i in range(start):
 
-        t2.write(f"TIME: {start}", align="center", font=["Arial", 12])
-        start -= 1
+def jack_setup():
+    jack.shape("turtle")
+    jack.shapesize(1.5)
+    jack.color("green")
+    jack.speed(0)
+    jack.penup()
+
+
+def handler(x, y):
+    global SCORE
+    SCORE += 1
+    score_turtle.clear()
+    score_turtle.write(f"SCORE: {SCORE} ", align="center", font=["Arial", 15])
+
+
+def timer_setup():
+    time_turtle.speed(0)
+    time_turtle.color("yellow")
+    time_turtle.hideturtle()
+    time_turtle.penup()
+    time_turtle.setposition(0, 260)
+
+
+def timer_motion(x):
+
+    for i in range(x):
+
+        z = x
+        jack.goto(randint(-150,150), randint(-150,150))
+        time_turtle.write(f"TIME: {x}", align="center", font=["Arial", 12])
+        x -= 1
         i += 1
         time.sleep(1)
-        t2.clear()
+        time_turtle.clear()
 
-        if i == x:
-            t2.write("GAME OVER", align="center", font=["Arial", 12])
-            time.sleep(5)
-            t2.clear()
+        if i == z:
+            time_turtle.write("GAME OVER", align="center", font=["Arial", 12])
+
         else:
             continue
 
 
-score()
-timer(5)
+turtle.tracer(0)
+# set up functions
+hey_setup()
+jack_setup()
+score_setup()
+timer_setup()
 
+turtle.tracer(1)
+
+jack.onclick(handler)
+timer_motion(10)
 turtle.mainloop()
