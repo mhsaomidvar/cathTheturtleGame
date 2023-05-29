@@ -58,10 +58,10 @@ def timer_setup():
 
 
 def timer_motion(x):
-
+    z = x
     for i in range(x):
-
-        z = x
+        
+        
         jack.goto(randint(-150,150), randint(-150,150))
         time_turtle.write(f"TIME: {x}", align="center", font=["Arial", 12])
         x -= 1
